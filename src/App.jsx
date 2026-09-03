@@ -221,7 +221,7 @@ const Products = () => {
 
         <Grid container spacing={4}>
           {apps.map((app, index) => (
-            <Grid item key={index} xs={12} md={4}>
+            <Grid item key={index} xs={12} sm={6} md={4}>
               <Card className="glass-card animate-fade-in-up" sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: 4, animationDelay: `${index * 150}ms` }}>
                 <Box sx={{ p: 4, pb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <Box sx={{ width: 64, height: 64, borderRadius: 3, bgcolor: 'white', color: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
@@ -272,7 +272,7 @@ const Articles = () => {
 
         <Grid container spacing={4}>
           {posts.map((post, index) => (
-            <Grid item key={index} xs={12} md={4}>
+            <Grid item key={index} xs={12} sm={6} md={4}>
               <Box component="article" className="glass-card animate-fade-in-up" sx={{ display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden', height: '100%', animationDelay: `${index * 150}ms`, border: '1px solid rgba(0,0,0,0.06)', transition: '0.3s', '&:hover': { transform: 'translateY(-6px)', boxShadow: '0 12px 30px rgba(37,99,235,0.1)' } }}>
                 {/* Image Placeholder */}
                 <Box sx={{ height: 160, background: post.img, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
