@@ -252,9 +252,9 @@ const Products = () => {
 
 const Articles = () => {
   const posts = [
-    { title: "Panduan Lengkap Core Web Vitals untuk SEO 2026", cat: "SEO", read: "8 Min", author: "Budi Santoso", date: "15 Okt 2026", img: "rgba(37,99,235,0.1)" },
-    { title: "Mengapa React Adalah Pilihan Tepat untuk Web Perusahaan", cat: "Development", read: "5 Min", author: "SijiFy Team", date: "10 Okt 2026", img: "rgba(8,145,178,0.1)" },
-    { title: "Studi Kasus: Meningkatkan Trafik Organik 300% dalam 3 Bulan", cat: "Case Study", read: "12 Min", author: "Andi Wijaya", date: "02 Okt 2026", img: "rgba(37,99,235,0.05)" },
+    { title: "Panduan Lengkap Core Web Vitals untuk SEO 2026", desc: "Pelajari cara mengoptimalkan LCP, FID, dan CLS untuk mendapatkan peringkat halaman pertama di Google.", cat: "SEO", read: "8 Min", author: "Budi Santoso", date: "15 Okt 2026", img: "linear-gradient(135deg, rgba(37,99,235,0.1) 0%, rgba(37,99,235,0.02) 100%)" },
+    { title: "Mengapa React Adalah Pilihan Tepat untuk Web Skala Besar", desc: "Arsitektur komponen dan ekosistem React membuatnya ideal untuk membangun web aplikasi tingkat enterprise.", cat: "Development", read: "5 Min", author: "SijiFy Team", date: "10 Okt 2026", img: "linear-gradient(135deg, rgba(8,145,178,0.1) 0%, rgba(8,145,178,0.02) 100%)" },
+    { title: "Studi Kasus: Meningkatkan Trafik Organik 300% dalam 3 Bulan", desc: "Bagaimana tim kami membantu perusahaan finansial melipatgandakan pengunjung lewat optimasi on-page.", cat: "Case Study", read: "12 Min", author: "Andi Wijaya", date: "02 Okt 2026", img: "linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(8,145,178,0.02) 100%)" },
   ];
 
   return (
@@ -263,33 +263,49 @@ const Articles = () => {
         <Typography variant="subtitle2" textAlign="center" color="primary.main" sx={{ fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', mb: 1 }}>
           Blog & Wawasan
         </Typography>
-        <Typography variant="h2" gutterBottom textAlign="center" component="h2" sx={{ mb: 8, fontSize: { xs: '2.2rem', md: '3rem' }, color: '#0f172a' }}>
+        <Typography variant="h2" gutterBottom textAlign="center" component="h2" sx={{ mb: 2, fontSize: { xs: '2.2rem', md: '3rem' }, color: '#0f172a' }}>
           Pelajari <span className="text-gradient">Tren Teknologi</span> Terkini
+        </Typography>
+        <Typography variant="body1" textAlign="center" color="text.secondary" sx={{ mb: 8, maxWidth: '600px', mx: 'auto', fontSize: '1.1rem' }}>
+          Artikel, panduan, dan studi kasus terbaru dari pakar industri untuk membantu Anda tetap berada di depan kompetitor.
         </Typography>
 
         <Grid container spacing={4}>
           {posts.map((post, index) => (
             <Grid item key={index} xs={12} md={4}>
-              <Box component="article" className="glass-card animate-fade-in-up" sx={{ display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden', height: '100%', animationDelay: `${index * 150}ms`, border: '1px solid rgba(0,0,0,0.05)' }}>
+              <Box component="article" className="glass-card animate-fade-in-up" sx={{ display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden', height: '100%', animationDelay: `${index * 150}ms`, border: '1px solid rgba(0,0,0,0.06)', transition: '0.3s', '&:hover': { transform: 'translateY(-8px)', boxShadow: '0 16px 40px rgba(37,99,235,0.1)' } }}>
                 {/* Image Placeholder */}
-                <Box sx={{ height: 200, bgcolor: post.img, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <Article sx={{ fontSize: 60, color: 'rgba(15,23,42,0.2)' }} />
+                <Box sx={{ height: 220, background: post.img, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+                  <Article sx={{ fontSize: 70, color: 'primary.main', opacity: 0.5 }} />
+                  <Chip label={post.cat} size="small" sx={{ position: 'absolute', top: 16, left: 16, bgcolor: 'white', color: 'primary.main', fontWeight: 700, boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }} />
                 </Box>
-                <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                  <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                    <Typography variant="caption" sx={{ color: 'secondary.main', fontWeight: 800, textTransform: 'uppercase' }}>{post.cat}</Typography>
-                    <Typography variant="caption" color="text.secondary">• {post.read} Baca</Typography>
+                
+                <Box sx={{ p: 4, pt: 3, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                  <Box sx={{ display: 'flex', gap: 2, mb: 1.5 }}>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      ⏱ {post.read} Baca
+                    </Typography>
                   </Box>
-                  <Typography component="h3" variant="h6" sx={{ fontWeight: 700, mb: 3, fontSize: '1.25rem', lineHeight: 1.5, color: '#0f172a', '&:hover': { color: 'primary.main', cursor: 'pointer' } }}>
+                  <Typography component="h3" variant="h6" sx={{ fontWeight: 700, mb: 2, fontSize: '1.25rem', lineHeight: 1.4, color: '#0f172a', '&:hover': { color: 'primary.main', cursor: 'pointer' } }}>
                     {post.title}
                   </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 4, lineHeight: 1.6, flexGrow: 1 }}>
+                    {post.desc}
+                  </Typography>
                   
-                  <Box sx={{ mt: 'auto', display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Avatar sx={{ width: 35, height: 35, bgcolor: 'primary.light' }}>{post.author[0]}</Avatar>
-                    <Box>
-                      <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0f172a' }}>{post.author}</Typography>
-                      <Typography variant="caption" color="text.secondary">{post.date}</Typography>
+                  <Divider sx={{ mb: 2.5 }} />
+                  
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                      <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.light', fontSize: '0.9rem', fontWeight: 600 }}>{post.author[0]}</Avatar>
+                      <Box>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0f172a', fontSize: '0.85rem' }}>{post.author}</Typography>
+                        <Typography variant="caption" color="text.secondary">{post.date}</Typography>
+                      </Box>
                     </Box>
+                    <Typography variant="button" sx={{ color: 'primary.main', fontWeight: 700, cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}>
+                      Baca &rarr;
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
@@ -298,7 +314,7 @@ const Articles = () => {
         </Grid>
         
         <Box sx={{ textAlign: 'center', mt: 8 }}>
-           <Button variant="outlined" color="primary" size="large" sx={{ py: 1.5, px: 4 }}>Lihat Semua Artikel</Button>
+           <Button variant="outlined" color="primary" size="large" sx={{ py: 1.5, px: 5, borderRadius: 2, fontWeight: 700 }}>Lihat Semua Artikel</Button>
         </Box>
       </Container>
     </Box>
