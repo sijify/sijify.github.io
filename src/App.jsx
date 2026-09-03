@@ -17,14 +17,31 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Divider,
+  Avatar
 } from '@mui/material';
-import { Menu as MenuIcon, Close as CloseIcon, Code, TrendingUp, Article, Speed, Storage, AutoGraph, RocketLaunch } from '@mui/icons-material';
+import { 
+  Menu as MenuIcon, 
+  Close as CloseIcon, 
+  Code, 
+  TrendingUp, 
+  Article, 
+  Speed, 
+  Storage, 
+  AutoGraph, 
+  RocketLaunch,
+  CheckCircle,
+  Search,
+  Web,
+  DesignServices
+} from '@mui/icons-material';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   const navItems = [
+    { label: 'Beranda', href: '#' },
     { label: 'Layanan', href: '#services' },
     { label: 'Produk', href: '#apps' },
     { label: 'Artikel', href: '#articles' }
@@ -32,26 +49,31 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar position="fixed" elevation={0} component="nav">
+      <AppBar position="fixed" elevation={0} component="nav" sx={{ background: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
         <Container>
-          <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-            <Typography variant="h5" component="div" sx={{ fontWeight: 800, letterSpacing: 1, cursor: 'pointer' }} className="text-gradient">
-              SijiFy
-            </Typography>
+          <Toolbar disableGutters sx={{ justifyContent: 'space-between', height: 80 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }}>
+              <Box sx={{ width: 40, height: 40, borderRadius: '12px', background: 'linear-gradient(135deg, #2563eb 0%, #0891b2 100%)', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontWeight: 900, fontSize: '1.2rem' }}>
+                SF
+              </Box>
+              <Typography variant="h5" component="div" sx={{ fontWeight: 800, letterSpacing: 0.5, color: '#0f172a' }}>
+                SijiFy
+              </Typography>
+            </Box>
             
             {/* Desktop Menu */}
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3, alignItems: 'center' }}>
               {navItems.map((item) => (
-                <Button key={item.label} color="inherit" href={item.href} sx={{ fontWeight: 600 }}>
+                <Typography key={item.label} component="a" href={item.href} sx={{ fontWeight: 600, color: 'text.secondary', textDecoration: 'none', transition: '0.2s', '&:hover': { color: 'primary.main' } }}>
                   {item.label}
-                </Button>
+                </Typography>
               ))}
-              <Button variant="contained" color="primary" sx={{ ml: 1 }}>Hubungi Kami</Button>
+              <Button variant="contained" color="primary" sx={{ ml: 2, boxShadow: 'none' }}>Konsultasi Gratis</Button>
             </Box>
 
             {/* Mobile Menu Icon */}
-            <IconButton color="inherit" aria-label="Buka menu" edge="end" onClick={handleDrawerToggle} sx={{ display: { md: 'none' } }}>
-              <MenuIcon />
+            <IconButton color="inherit" aria-label="Buka menu" edge="end" onClick={handleDrawerToggle} sx={{ display: { md: 'none' }, color: '#0f172a' }}>
+              <MenuIcon fontSize="large" />
             </IconButton>
           </Toolbar>
         </Container>
@@ -59,22 +81,24 @@ const Navbar = () => {
 
       {/* Mobile Drawer */}
       <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle} sx={{ display: { xs: 'block', md: 'none' } }}>
-        <Box sx={{ width: 250, p: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <Box sx={{ width: 280, p: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+            <Typography variant="h6" sx={{ fontWeight: 800 }}>Menu SijiFy</Typography>
             <IconButton onClick={handleDrawerToggle}>
               <CloseIcon />
             </IconButton>
           </Box>
           <List>
             {navItems.map((item) => (
-              <ListItem key={item.label} disablePadding>
-                <ListItemButton component="a" href={item.href} onClick={handleDrawerToggle}>
-                  <ListItemText primary={item.label} primaryTypographyProps={{ fontWeight: 600 }} />
+              <ListItem key={item.label} disablePadding sx={{ mb: 1 }}>
+                <ListItemButton component="a" href={item.href} onClick={handleDrawerToggle} sx={{ borderRadius: 2 }}>
+                  <ListItemText primary={item.label} primaryTypographyProps={{ fontWeight: 600, fontSize: '1.1rem' }} />
                 </ListItemButton>
               </ListItem>
             ))}
-            <ListItem disablePadding sx={{ mt: 2 }}>
-              <Button variant="contained" color="primary" fullWidth>Hubungi Kami</Button>
+            <Divider sx={{ my: 3 }} />
+            <ListItem disablePadding>
+              <Button variant="contained" color="primary" fullWidth size="large" sx={{ py: 1.5 }}>Hubungi Kami</Button>
             </ListItem>
           </List>
         </Box>
@@ -84,94 +108,138 @@ const Navbar = () => {
 };
 
 const Hero = () => (
-  <Box component="header" sx={{ pt: { xs: 15, md: 22 }, pb: { xs: 10, md: 15 }, textAlign: 'center', position: 'relative', overflow: 'hidden' }} className="animate-fade-in-up">
+  <Box component="header" sx={{ pt: { xs: 18, md: 24 }, pb: { xs: 12, md: 18 }, textAlign: 'center', position: 'relative', overflow: 'hidden' }} className="animate-fade-in-up">
     {/* Decorative background blur elements */}
-    <Box sx={{ position: 'absolute', top: '10%', left: '10%', width: { xs: '200px', md: '400px' }, height: { xs: '200px', md: '400px' }, background: 'rgba(37,99,235,0.06)', filter: 'blur(100px)', borderRadius: '50%', zIndex: -1 }} className="float-animation" />
-    <Box sx={{ position: 'absolute', bottom: '10%', right: '10%', width: { xs: '150px', md: '300px' }, height: { xs: '150px', md: '300px' }, background: 'rgba(8,145,178,0.06)', filter: 'blur(80px)', borderRadius: '50%', zIndex: -1 }} className="float-animation delay-200" />
+    <Box sx={{ position: 'absolute', top: '5%', left: '15%', width: { xs: '250px', md: '500px' }, height: { xs: '250px', md: '500px' }, background: 'rgba(37,99,235,0.05)', filter: 'blur(80px)', borderRadius: '50%', zIndex: -1 }} className="float-animation" />
+    <Box sx={{ position: 'absolute', bottom: '5%', right: '15%', width: { xs: '200px', md: '400px' }, height: { xs: '200px', md: '400px' }, background: 'rgba(8,145,178,0.05)', filter: 'blur(80px)', borderRadius: '50%', zIndex: -1 }} className="float-animation delay-200" />
     
-    <Container maxWidth="md">
-      <Chip icon={<RocketLaunch fontSize="small" color="primary"/>} label="Konsultasi SEO & Web Development" variant="outlined" sx={{ mb: 4, px: 2, py: 2.5, fontSize: { xs: '0.8rem', sm: '0.9rem' }, borderColor: 'rgba(37,99,235,0.3)', bgcolor: 'rgba(255,255,255,0.5)', fontWeight: 600 }} />
-      <Typography variant="h1" gutterBottom component="h1" sx={{ fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, lineHeight: 1.1 }}>
-        Tingkatkan <span className="text-gradient">Visibilitas Digital</span> Bisnis Anda
+    <Container maxWidth="lg">
+      <Chip icon={<RocketLaunch fontSize="small" style={{ color: '#2563eb' }}/>} label="Agensi Teknologi & SEO Terpercaya" variant="outlined" sx={{ mb: 4, px: 2, py: 2.5, fontSize: { xs: '0.85rem', sm: '1rem' }, borderColor: 'rgba(37,99,235,0.2)', bgcolor: 'rgba(255,255,255,0.8)', fontWeight: 700, color: '#1e40af' }} />
+      
+      <Typography variant="h1" gutterBottom component="h1" sx={{ fontSize: { xs: '2.5rem', sm: '3.8rem', md: '4.8rem' }, lineHeight: 1.15, maxWidth: '900px', mx: 'auto' }}>
+        Solusi Cerdas untuk <br />
+        <span className="text-gradient">Pertumbuhan Digital</span> Anda
       </Typography>
-      <Typography variant="h5" color="text.secondary" paragraph sx={{ mb: 6, maxWidth: '90%', mx: 'auto', lineHeight: 1.7, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
-        Kami menyediakan aplikasi web premium dan strategi SEO berbasis data untuk membantu bisnis Anda mendominasi pencarian dan menjangkau lebih banyak klien.
+      
+      <Typography variant="body1" color="text.secondary" paragraph sx={{ mb: 6, maxWidth: '750px', mx: 'auto', lineHeight: 1.8, fontSize: { xs: '1.1rem', md: '1.25rem' } }}>
+        SijiFy adalah mitra strategis Anda dalam pengembangan aplikasi web berkinerja tinggi dan optimasi mesin pencari (SEO). Kami memastikan bisnis Anda ditemukan oleh audiens yang tepat.
       </Typography>
-      <Box sx={{ display: 'flex', gap: { xs: 2, sm: 3 }, justifyContent: 'center', flexDirection: { xs: 'column', sm: 'row' } }}>
-        <Button variant="contained" color="primary" size="large" href="#services" sx={{ py: 1.5, px: 4, fontSize: '1.1rem' }}>
-          Konsultasi Sekarang
+      
+      <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexDirection: { xs: 'column', sm: 'row' }, px: { xs: 2, sm: 0 } }}>
+        <Button variant="contained" color="primary" size="large" href="#services" sx={{ py: 1.8, px: 5, fontSize: '1.1rem', borderRadius: 2 }}>
+          Mulai Konsultasi
         </Button>
-        <Button variant="outlined" color="primary" size="large" href="#apps" sx={{ py: 1.5, px: 4, fontSize: '1.1rem' }}>
-          Lihat Produk Kami
+        <Button variant="outlined" color="primary" size="large" href="#apps" sx={{ py: 1.8, px: 5, fontSize: '1.1rem', borderRadius: 2, bgcolor: 'rgba(255,255,255,0.8)' }}>
+          Lihat Portofolio
         </Button>
+      </Box>
+
+      <Box sx={{ mt: 8, pt: 6, borderTop: '1px solid rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 3, fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>Fokus Keahlian Kami</Typography>
+        <Box sx={{ display: 'flex', gap: { xs: 2, md: 5 }, flexWrap: 'wrap', justifyContent: 'center' }}>
+          {['Technical SEO', 'React & Web Apps', 'Page Speed', 'UI/UX Design'].map((skill) => (
+            <Box key={skill} sx={{ display: 'flex', alignItems: 'center', gap: 1, color: '#0f172a', fontWeight: 600 }}>
+              <CheckCircle color="secondary" fontSize="small" />
+              <Typography variant="body1" fontWeight={600}>{skill}</Typography>
+            </Box>
+          ))}
+        </Box>
       </Box>
     </Container>
   </Box>
 );
 
-const Services = () => (
-  <Box component="section" id="services" sx={{ py: { xs: 8, md: 12 }, bgcolor: 'rgba(241,245,249,0.8)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
-    <Container>
-      <Grid container spacing={{ xs: 6, md: 8 }} alignItems="center">
-        <Grid item xs={12} md={6} className="animate-fade-in-up">
-          <Typography variant="h2" gutterBottom component="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' } }}>
-            Layanan <span className="text-gradient">Konsultasi Ahli</span>
-          </Typography>
-          <Typography variant="h4" gutterBottom color="text.primary" sx={{ mt: 2, mb: 2, fontSize: { xs: '1.5rem', md: '1.75rem' } }}>
-            SEO & Strategi Digital
-          </Typography>
-          <Typography variant="body1" paragraph color="text.secondary" sx={{ fontSize: { xs: '1rem', md: '1.15rem' }, lineHeight: 1.8 }}>
-            Dominasi peringkat mesin pencari dan dapatkan trafik organik berkualitas tinggi. Tim SijiFy melakukan audit teknis mendalam, perbaikan struktur kode, serta optimasi konten yang secara khusus disesuaikan dengan niche bisnis Anda.
-          </Typography>
-          <Button variant="contained" color="secondary" size="large" sx={{ mt: 3 }}>
-            Tingkatkan Trafik Anda
-          </Button>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Box className="glass-card float-animation delay-200" sx={{ p: { xs: 4, md: 8 }, borderRadius: 6, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-             <TrendingUp sx={{ fontSize: { xs: 80, md: 120 }, color: 'primary.main', mb: 3 }} />
-             <Typography variant="h3" component="p" sx={{ fontSize: { xs: '1.8rem', md: '2.5rem' } }}>Berbasis Data</Typography>
-             <Typography variant="h6" color="text.secondary" sx={{ mt: 1, fontWeight: 400 }}>Fokus pada Hasil yang Terukur</Typography>
-          </Box>
-        </Grid>
-      </Grid>
-    </Container>
-  </Box>
-);
-
-const Products = () => {
-  const apps = [
-    { title: "SijiFy Analytics", icon: <AutoGraph sx={{ fontSize: 45 }} />, desc: "Pantau trafik website Anda secara real-time dengan wawasan dan analitik mendalam." },
-    { title: "SijiFy SpeedBoost", icon: <Speed sx={{ fontSize: 45 }} />, desc: "Optimasi otomatis untuk gambar dan caching yang membuat website Anda memuat dalam hitungan milidetik." },
-    { title: "SijiFy CMS", icon: <Storage sx={{ fontSize: 45 }} />, desc: "Sistem manajemen konten cerdas yang dibangun khusus dengan standar SEO tertinggi." }
+const Services = () => {
+  const servicesList = [
+    { title: 'Konsultasi & Audit SEO', icon: <Search sx={{ fontSize: 40 }}/>, desc: 'Analisis mendalam terhadap struktur website Anda untuk menemukan celah teknis dan merumuskan strategi peringkat nomor satu di Google.' },
+    { title: 'Pengembangan Web', icon: <Web sx={{ fontSize: 40 }}/>, desc: 'Pembuatan website profil perusahaan hingga aplikasi web kompleks dengan React yang sangat cepat, aman, dan mudah diskalakan.' },
+    { title: 'Optimasi Kecepatan', icon: <Speed sx={{ fontSize: 40 }}/>, desc: 'Perbaikan skor Core Web Vitals. Kami membuat website Anda memuat dalam hitungan milidetik untuk menekan bounce rate.' },
+    { title: 'Desain UI / UX', icon: <DesignServices sx={{ fontSize: 40 }}/>, desc: 'Perancangan antarmuka yang tidak hanya indah secara visual, tetapi juga memberikan kenyamanan maksimal bagi pengguna akhir.' },
   ];
 
   return (
-    <Box component="section" id="apps" sx={{ py: { xs: 8, md: 12 }, position: 'relative' }}>
-      <Container>
-        <Typography variant="h2" gutterBottom textAlign="center" component="h2" sx={{ mb: 2, fontSize: { xs: '2rem', md: '3rem' } }}>
-          Produk <span className="text-gradient">Unggulan</span>
-        </Typography>
-        <Typography variant="h6" textAlign="center" color="text.secondary" sx={{ mb: 8, fontWeight: 400, maxWidth: '600px', mx: 'auto' }}>
-          Kami mengembangkan teknologi modern untuk membantu infrastruktur bisnis Anda.
-        </Typography>
+    <Box component="section" id="services" sx={{ py: { xs: 10, md: 14 }, bgcolor: 'white', position: 'relative' }}>
+      <Container maxWidth="lg">
+        <Box sx={{ textAlign: 'center', mb: 8, maxWidth: '700px', mx: 'auto' }} className="animate-fade-in-up">
+          <Typography variant="subtitle2" color="primary.main" sx={{ fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', mb: 1 }}>
+            Layanan Kami
+          </Typography>
+          <Typography variant="h2" gutterBottom component="h2" sx={{ fontSize: { xs: '2.2rem', md: '3rem' }, color: '#0f172a' }}>
+            Solusi Menyeluruh untuk <span className="text-gradient">Bisnis Anda</span>
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
+            Dari perencanaan strategi hingga eksekusi kode, kami menyediakan layanan terpadu untuk memastikan kehadiran digital Anda mendominasi kompetisi.
+          </Typography>
+        </Box>
+
+        <Grid container spacing={4}>
+          {servicesList.map((srv, index) => (
+            <Grid item xs={12} sm={6} key={index}>
+              <Box className="glass-card animate-fade-in-up" sx={{ p: 5, borderRadius: 4, height: '100%', animationDelay: `${index * 150}ms`, transition: '0.3s', '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 12px 30px rgba(37,99,235,0.08)' } }}>
+                <Box sx={{ width: 70, height: 70, borderRadius: 3, bgcolor: 'rgba(37,99,235,0.08)', color: 'primary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 3 }}>
+                  {srv.icon}
+                </Box>
+                <Typography variant="h4" component="h3" sx={{ fontSize: '1.4rem', mb: 2, color: '#0f172a' }}>
+                  {srv.title}
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.7 }}>
+                  {srv.desc}
+                </Typography>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
+
+const Products = () => {
+  const apps = [
+    { title: "SijiFy Analytics Core", label: "Software", icon: <AutoGraph sx={{ fontSize: 45 }} />, desc: "Aplikasi pantauan trafik cerdas. Dapatkan insight pengunjung secara real-time tanpa mengorbankan privasi data klien Anda." },
+    { title: "SijiFy SEO Optimizer", label: "Plugin", icon: <TrendingUp sx={{ fontSize: 45 }} />, desc: "Alat bantu optimasi meta tag, pembuatan sitemap otomatis, dan analisis konten on-page berbasis kecerdasan buatan (AI)." },
+    { title: "SijiFy Headless CMS", label: "Platform", icon: <Storage sx={{ fontSize: 45 }} />, desc: "Sistem manajemen konten masa depan. Kelola artikel dan halaman Anda dari satu dashboard terpusat yang super cepat." }
+  ];
+
+  return (
+    <Box component="section" id="apps" sx={{ py: { xs: 10, md: 14 }, bgcolor: '#f8fafc', borderTop: '1px solid rgba(0,0,0,0.03)', borderBottom: '1px solid rgba(0,0,0,0.03)' }}>
+      <Container maxWidth="lg">
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', md: 'flex-end' }, mb: 8 }} className="animate-fade-in-up">
+          <Box sx={{ maxWidth: '600px' }}>
+            <Typography variant="subtitle2" color="secondary.main" sx={{ fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', mb: 1 }}>
+              Produk Digital
+            </Typography>
+            <Typography variant="h2" gutterBottom component="h2" sx={{ fontSize: { xs: '2.2rem', md: '3rem' }, mb: 2, color: '#0f172a' }}>
+              Ekosistem <span className="text-gradient">Aplikasi</span> SijiFy
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.1rem', lineHeight: 1.7 }}>
+              Selain jasa konsultasi, kami juga mengembangkan *tools* internal berlisensi yang siap pakai untuk menunjang performa infrastruktur web Anda.
+            </Typography>
+          </Box>
+          <Button variant="outlined" color="primary" sx={{ mt: { xs: 3, md: 0 }, py: 1.5, px: 3 }}>Lihat Semua Produk</Button>
+        </Box>
+
         <Grid container spacing={4}>
           {apps.map((app, index) => (
-            <Grid item key={index} xs={12} sm={6} md={4}>
-              <Card className="glass-card animate-fade-in-up" sx={{ height: '100%', display: 'flex', flexDirection: 'column', animationDelay: `${index * 100}ms` }}>
-                <Box sx={{ p: 4, pb: 2, display: 'flex', color: 'secondary.main' }} className="float-animation">
-                  {app.icon}
+            <Grid item key={index} xs={12} md={4}>
+              <Card className="glass-card animate-fade-in-up" sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: 4, animationDelay: `${index * 150}ms` }}>
+                <Box sx={{ p: 4, pb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <Box sx={{ width: 64, height: 64, borderRadius: 3, bgcolor: 'white', color: 'secondary.main', display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                    {app.icon}
+                  </Box>
+                  <Chip label={app.label} size="small" sx={{ bgcolor: 'rgba(37,99,235,0.1)', color: 'primary.dark', fontWeight: 700 }} />
                 </Box>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h4" component="h3" sx={{ fontSize: '1.5rem' }}>
+                <CardContent sx={{ flexGrow: 1, p: 4, pt: 2 }}>
+                  <Typography gutterBottom variant="h4" component="h3" sx={{ fontSize: '1.3rem', mb: 2, color: '#0f172a' }}>
                     {app.title}
                   </Typography>
-                  <Typography variant="body1" color="text.secondary" sx={{ mt: 2, lineHeight: 1.6 }}>
+                  <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.7 }}>
                     {app.desc}
                   </Typography>
                 </CardContent>
-                <CardActions sx={{ p: 3, pt: 0 }}>
-                  <Button size="medium" color="primary" sx={{ fontWeight: 'bold' }}>Pelajari Lebih Lanjut</Button>
+                <Divider />
+                <CardActions sx={{ p: 3 }}>
+                  <Button size="medium" color="primary" sx={{ fontWeight: 700 }}>Pelajari Lebih Lanjut &rarr;</Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -182,73 +250,110 @@ const Products = () => {
   );
 };
 
-const Articles = () => (
-  <Box component="section" id="articles" sx={{ py: { xs: 8, md: 12 }, bgcolor: 'rgba(241,245,249,0.8)' }}>
-    <Container>
-      <Typography variant="h2" gutterBottom textAlign="center" component="h2" sx={{ mb: 8, fontSize: { xs: '2rem', md: '3rem' } }}>
-        Wawasan & <span className="text-gradient">Artikel Terbaru</span>
-      </Typography>
-      <Grid container spacing={4}>
-        {[1, 2, 3, 4].map((item, index) => (
-          <Grid item key={item} xs={12} md={6}>
-            <Box component="article" className="glass-card animate-fade-in-up" sx={{ display: 'flex', alignItems: 'center', p: 3, borderRadius: 4, animationDelay: `${index * 150}ms` }}>
-              <Box sx={{ p: 2.5, color: 'primary.main', bgcolor: 'rgba(37,99,235,0.08)', borderRadius: 3, mr: { xs: 2, sm: 3 } }}>
-                <Article sx={{ fontSize: { xs: 30, sm: 40 } }} />
+const Articles = () => {
+  const posts = [
+    { title: "Panduan Lengkap Core Web Vitals untuk SEO 2026", cat: "SEO", read: "8 Min", author: "Budi Santoso", date: "15 Okt 2026", img: "rgba(37,99,235,0.1)" },
+    { title: "Mengapa React Adalah Pilihan Tepat untuk Web Perusahaan", cat: "Development", read: "5 Min", author: "SijiFy Team", date: "10 Okt 2026", img: "rgba(8,145,178,0.1)" },
+    { title: "Studi Kasus: Meningkatkan Trafik Organik 300% dalam 3 Bulan", cat: "Case Study", read: "12 Min", author: "Andi Wijaya", date: "02 Okt 2026", img: "rgba(37,99,235,0.05)" },
+  ];
+
+  return (
+    <Box component="section" id="articles" sx={{ py: { xs: 10, md: 14 }, bgcolor: 'white' }}>
+      <Container maxWidth="lg">
+        <Typography variant="subtitle2" textAlign="center" color="primary.main" sx={{ fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', mb: 1 }}>
+          Blog & Wawasan
+        </Typography>
+        <Typography variant="h2" gutterBottom textAlign="center" component="h2" sx={{ mb: 8, fontSize: { xs: '2.2rem', md: '3rem' }, color: '#0f172a' }}>
+          Pelajari <span className="text-gradient">Tren Teknologi</span> Terkini
+        </Typography>
+
+        <Grid container spacing={4}>
+          {posts.map((post, index) => (
+            <Grid item key={index} xs={12} md={4}>
+              <Box component="article" className="glass-card animate-fade-in-up" sx={{ display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden', height: '100%', animationDelay: `${index * 150}ms`, border: '1px solid rgba(0,0,0,0.05)' }}>
+                {/* Image Placeholder */}
+                <Box sx={{ height: 200, bgcolor: post.img, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Article sx={{ fontSize: 60, color: 'rgba(15,23,42,0.2)' }} />
+                </Box>
+                <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                  <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                    <Typography variant="caption" sx={{ color: 'secondary.main', fontWeight: 800, textTransform: 'uppercase' }}>{post.cat}</Typography>
+                    <Typography variant="caption" color="text.secondary">• {post.read} Baca</Typography>
+                  </Box>
+                  <Typography component="h3" variant="h6" sx={{ fontWeight: 700, mb: 3, fontSize: '1.25rem', lineHeight: 1.5, color: '#0f172a', '&:hover': { color: 'primary.main', cursor: 'pointer' } }}>
+                    {post.title}
+                  </Typography>
+                  
+                  <Box sx={{ mt: 'auto', display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Avatar sx={{ width: 35, height: 35, bgcolor: 'primary.light' }}>{post.author[0]}</Avatar>
+                    <Box>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0f172a' }}>{post.author}</Typography>
+                      <Typography variant="caption" color="text.secondary">{post.date}</Typography>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Typography component="h3" variant="h6" sx={{ fontWeight: 600, mb: 1, fontSize: { xs: '1.1rem', sm: '1.25rem' }, lineHeight: 1.4, '&:hover': { color: 'secondary.main', cursor: 'pointer' } }}>
-                  {index % 2 === 0 ? "Strategi Modern SEO Pattern Tahun 2026" : "Pentingnya Web Core Vitals untuk Ranking Google"}
-                </Typography>
-                <Typography variant="subtitle2" color="text.secondary" component="time" dateTime="2026-10-12">
-                  12 Okt 2026 • 5 menit baca
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-      <Box sx={{ textAlign: 'center', mt: 8 }}>
-         <Button variant="outlined" color="primary" size="large">Baca Semua Artikel</Button>
-      </Box>
-    </Container>
-  </Box>
-);
+            </Grid>
+          ))}
+        </Grid>
+        
+        <Box sx={{ textAlign: 'center', mt: 8 }}>
+           <Button variant="outlined" color="primary" size="large" sx={{ py: 1.5, px: 4 }}>Lihat Semua Artikel</Button>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
 
 const Footer = () => (
-  <Box component="footer" sx={{ bgcolor: '#0f172a', py: 8, borderTop: '1px solid rgba(0,0,0,0.05)', color: 'white' }}>
-    <Container>
-      <Grid container spacing={4} sx={{ mb: 6 }}>
+  <Box component="footer" sx={{ bgcolor: '#0f172a', pt: 10, pb: 4, color: 'white' }}>
+    <Container maxWidth="lg">
+      <Grid container spacing={6} sx={{ mb: 8 }}>
         <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 800, color: 'primary.light' }}>
-            SijiFy
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: { xs: 'center', md: 'flex-start' }, mb: 3 }}>
+            <Box sx={{ width: 35, height: 35, borderRadius: '8px', background: 'linear-gradient(135deg, #2563eb 0%, #0891b2 100%)', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontWeight: 900 }}>
+              SF
+            </Box>
+            <Typography variant="h5" sx={{ fontWeight: 800, letterSpacing: 0.5 }}>
+              SijiFy
+            </Typography>
+          </Box>
+          <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.7)', mb: 3, lineHeight: 1.8 }}>
+            SijiFy adalah agensi digital terdepan yang berfokus pada pengembangan website modern dan optimasi mesin pencari organik.
           </Typography>
-          <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.6)', mb: 2 }}>
-            Membangun masa depan digital yang responsif, cepat, dan terindeks dengan sempurna di mesin pencari.
-          </Typography>
+          <Button variant="contained" color="primary" size="small" sx={{ borderRadius: 2 }}>Mulai Proyek Anda</Button>
         </Grid>
-        <Grid item xs={12} sm={6} md={4} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Layanan</Typography>
-          <Typography variant="body2" sx={{ mb: 1, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Konsultasi SEO</Typography>
-          <Typography variant="body2" sx={{ mb: 1, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Web Development</Typography>
-          <Typography variant="body2" sx={{ mb: 1, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'white' } }}>UI/UX Design</Typography>
+        <Grid item xs={12} sm={4} md={2} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, color: 'white' }}>Layanan</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>Audit & Konsultasi SEO</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>Pengembangan Web</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>Optimasi Kecepatan</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>Desain UI/UX</Typography>
         </Grid>
-        <Grid item xs={12} sm={6} md={4} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-          <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>Perusahaan</Typography>
-          <Typography variant="body2" sx={{ mb: 1, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Tentang Kami</Typography>
-          <Typography variant="body2" sx={{ mb: 1, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Hubungi Kami</Typography>
-          <Typography variant="body2" sx={{ mb: 1, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Blog & Artikel</Typography>
+        <Grid item xs={12} sm={4} md={3} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, color: 'white' }}>Produk</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>SijiFy Analytics Core</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>SijiFy SEO Optimizer</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>SijiFy Headless CMS</Typography>
+        </Grid>
+        <Grid item xs={12} sm={4} md={3} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 3, color: 'white' }}>Perusahaan</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>Tentang SijiFy</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>Blog & Artikel Baru</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>Hubungi Tim Kami</Typography>
+          <Typography variant="body2" sx={{ mb: 2, color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'primary.light' } }}>Karir</Typography>
         </Grid>
       </Grid>
       
-      <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.1)', pt: 4, display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', mb: { xs: 2, sm: 0 } }}>
+      <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.1)', pt: 4, display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', mb: { xs: 2, md: 0 } }}>
           {'© '}
           {new Date().getFullYear()}
           {' SijiFy.com. All rights reserved.'}
         </Typography>
-        <Box sx={{ display: 'flex', gap: 3 }}>
-          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Privacy Policy</Typography>
-          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Terms of Service</Typography>
+        <Box sx={{ display: 'flex', gap: 4 }}>
+          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Kebijakan Privasi</Typography>
+          <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', cursor: 'pointer', '&:hover': { color: 'white' } }}>Syarat & Ketentuan</Typography>
         </Box>
       </Box>
     </Container>
