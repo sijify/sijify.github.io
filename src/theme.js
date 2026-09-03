@@ -2,24 +2,24 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
-      main: '#bb86fc', // Vivid Purple
-      light: '#d0a9fd',
-      dark: '#825db0',
+      main: '#2563eb', // Tech Blue
+      light: '#60a5fa',
+      dark: '#1e40af',
     },
     secondary: {
-      main: '#03dac6', // Cyan/Teal
-      light: '#66fff9',
-      dark: '#00a896',
+      main: '#0891b2', // Professional Teal
+      light: '#22d3ee',
+      dark: '#155e75',
     },
     background: {
-      default: '#0d0d12', // Deep space dark
-      paper: '#15151e',
+      default: '#f8fafc', // Very soft slate (almost white)
+      paper: '#ffffff',
     },
     text: {
-      primary: '#ffffff',
-      secondary: 'rgba(255, 255, 255, 0.7)',
+      primary: '#0f172a',
+      secondary: '#475569',
     }
   },
   typography: {
@@ -30,6 +30,7 @@ const theme = createTheme({
       fontWeight: 800,
       letterSpacing: '-0.02em',
       lineHeight: 1.1,
+      color: '#0f172a',
     },
     h2: {
       fontFamily: '"Outfit", sans-serif',
@@ -49,25 +50,35 @@ const theme = createTheme({
     button: {
       textTransform: 'none',
       fontWeight: 600,
-      letterSpacing: '0.02em',
+      letterSpacing: '0.01em',
     },
   },
   shape: {
-    borderRadius: 16,
+    borderRadius: 8, // Slightly more square for professional tech look
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 30,
-          padding: '12px 28px',
+          borderRadius: 8, // Match professional look
+          padding: '10px 24px',
           transition: 'all 0.3s ease',
         },
         containedPrimary: {
-          background: 'linear-gradient(135deg, #bb86fc 0%, #825db0 100%)',
-          boxShadow: '0 4px 15px rgba(187, 134, 252, 0.3)',
+          background: 'linear-gradient(135deg, #2563eb 0%, #1e40af 100%)',
+          boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)',
+          color: '#ffffff',
           '&:hover': {
-            boxShadow: '0 6px 20px rgba(187, 134, 252, 0.5)',
+            boxShadow: '0 6px 16px rgba(37, 99, 235, 0.35)',
+            transform: 'translateY(-2px)',
+          }
+        },
+        containedSecondary: {
+          background: 'linear-gradient(135deg, #0891b2 0%, #155e75 100%)',
+          boxShadow: '0 4px 12px rgba(8, 145, 178, 0.25)',
+          color: '#ffffff',
+          '&:hover': {
+            boxShadow: '0 6px 16px rgba(8, 145, 178, 0.35)',
             transform: 'translateY(-2px)',
           }
         },
@@ -76,6 +87,7 @@ const theme = createTheme({
           '&:hover': {
             borderWidth: '2px',
             transform: 'translateY(-2px)',
+            background: 'rgba(37, 99, 235, 0.04)',
           }
         }
       },
@@ -83,9 +95,10 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          background: 'rgba(13, 13, 18, 0.7)',
-          backdropFilter: 'blur(20px)',
-          borderBottom: '1px solid rgba(255,255,255,0.05)',
+          background: 'rgba(255, 255, 255, 0.9)',
+          backdropFilter: 'blur(10px)',
+          borderBottom: '1px solid rgba(0,0,0,0.06)',
+          color: '#0f172a',
         }
       }
     }

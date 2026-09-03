@@ -36,11 +36,11 @@ const Navbar = () => (
 const Hero = () => (
   <Box component="header" sx={{ pt: { xs: 15, md: 20 }, pb: { xs: 10, md: 15 }, textAlign: 'center', position: 'relative' }} className="animate-fade-in-up">
     {/* Decorative background blur elements */}
-    <Box sx={{ position: 'absolute', top: '10%', left: '20%', width: '300px', height: '300px', background: 'rgba(187,134,252,0.15)', filter: 'blur(100px)', borderRadius: '50%', zIndex: -1 }} className="float-animation" />
-    <Box sx={{ position: 'absolute', bottom: '10%', right: '20%', width: '250px', height: '250px', background: 'rgba(3,218,198,0.1)', filter: 'blur(80px)', borderRadius: '50%', zIndex: -1 }} className="float-animation delay-200" />
+    <Box sx={{ position: 'absolute', top: '10%', left: '20%', width: '300px', height: '300px', background: 'rgba(37,99,235,0.1)', filter: 'blur(100px)', borderRadius: '50%', zIndex: -1 }} className="float-animation" />
+    <Box sx={{ position: 'absolute', bottom: '10%', right: '20%', width: '250px', height: '250px', background: 'rgba(8,145,178,0.08)', filter: 'blur(80px)', borderRadius: '50%', zIndex: -1 }} className="float-animation delay-200" />
     
     <Container maxWidth="md">
-      <Chip label="✨ New: SijiFy SEO Tools v2" color="secondary" variant="outlined" sx={{ mb: 4, px: 1, py: 2, fontSize: '0.9rem', borderColor: 'rgba(3,218,198,0.3)' }} />
+      <Chip label="✨ New: SijiFy SEO Tools v2" color="primary" variant="outlined" sx={{ mb: 4, px: 1, py: 2, fontSize: '0.9rem', borderColor: 'rgba(37,99,235,0.3)' }} />
       <Typography variant="h1" gutterBottom component="h1">
         Elevate Your <span className="text-gradient">Digital Presence</span>
       </Typography>
@@ -51,7 +51,7 @@ const Hero = () => (
         <Button variant="contained" color="primary" size="large" href="#services">
           Get a Consultation
         </Button>
-        <Button variant="outlined" color="inherit" size="large" href="#apps">
+        <Button variant="outlined" color="primary" size="large" href="#apps">
           Explore Apps
         </Button>
       </Box>
@@ -100,7 +100,7 @@ const Products = () => {
 };
 
 const Services = () => (
-  <Box component="section" id="services" sx={{ py: 12, bgcolor: 'rgba(0,0,0,0.3)', borderTop: '1px solid rgba(255,255,255,0.02)' }}>
+  <Box component="section" id="services" sx={{ py: 12, bgcolor: 'rgba(241,245,249,0.8)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
     <Container>
       <Grid container spacing={8} alignItems="center">
         <Grid item xs={12} md={6} className="animate-fade-in-up">
@@ -113,7 +113,7 @@ const Services = () => (
           <Typography variant="body1" paragraph color="text.secondary" sx={{ fontSize: '1.15rem', lineHeight: 1.8 }}>
             Dominate search engine rankings and drive highly targeted organic traffic to your business. Our team conducts deep technical audits, develops robust content strategies, and builds authoritative backlinks specifically tailored for your niche.
           </Typography>
-          <Button variant="contained" color="secondary" size="large" sx={{ mt: 4, color: '#000' }}>
+          <Button variant="contained" color="secondary" size="large" sx={{ mt: 4 }}>
             Start Growing Today
           </Button>
         </Grid>
@@ -139,7 +139,7 @@ const Articles = () => (
         {[1, 2].map((item, index) => (
           <Grid item key={item} xs={12} md={6}>
             <Box component="article" className="glass-card animate-fade-in-up" sx={{ display: 'flex', alignItems: 'center', p: 3, borderRadius: 4, animationDelay: `${index * 150}ms` }}>
-              <Box sx={{ p: 3, color: 'primary.main', bgcolor: 'rgba(187,134,252,0.1)', borderRadius: 3, mr: 3 }}>
+              <Box sx={{ p: 3, color: 'primary.main', bgcolor: 'rgba(37,99,235,0.08)', borderRadius: 3, mr: 3 }}>
                 <Article sx={{ fontSize: 40 }} />
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -162,7 +162,7 @@ const Articles = () => (
 );
 
 const Footer = () => (
-  <Box component="footer" sx={{ bgcolor: '#08080b', py: 8, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+  <Box component="footer" sx={{ bgcolor: '#f1f5f9', py: 8, borderTop: '1px solid rgba(0,0,0,0.05)' }}>
     <Container>
       <Typography variant="h4" align="center" gutterBottom className="text-gradient" sx={{ fontWeight: 800 }}>
         SijiFy
@@ -171,9 +171,9 @@ const Footer = () => (
         Building the web of tomorrow, today.
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4, mb: 4 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'white' } }}>Privacy Policy</Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'white' } }}>Terms of Service</Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'white' } }}>Contact</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Privacy Policy</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Terms of Service</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>Contact</Typography>
       </Box>
       <Typography variant="body2" color="text.secondary" align="center">
         {'© '}
@@ -185,7 +185,6 @@ const Footer = () => (
 );
 
 function App() {
-  // Intersection Observer for scroll animations could be added here for production
   return (
     <Box component="main">
       <Navbar />
