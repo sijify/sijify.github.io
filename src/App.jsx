@@ -258,7 +258,7 @@ const Articles = () => {
   ];
 
   return (
-    <Box component="section" id="articles" sx={{ py: { xs: 10, md: 14 }, bgcolor: 'white' }}>
+    <Box component="section" id="articles" sx={{ py: { xs: 8, md: 10 }, bgcolor: 'white' }}>
       <Container maxWidth="lg">
         <Typography variant="subtitle2" textAlign="center" color="primary.main" sx={{ fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', mb: 1 }}>
           Blog & Wawasan
@@ -273,23 +273,23 @@ const Articles = () => {
         <Grid container spacing={4}>
           {posts.map((post, index) => (
             <Grid item key={index} xs={12} md={4}>
-              <Box component="article" className="glass-card animate-fade-in-up" sx={{ display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden', height: '100%', animationDelay: `${index * 150}ms`, border: '1px solid rgba(0,0,0,0.06)', transition: '0.3s', '&:hover': { transform: 'translateY(-8px)', boxShadow: '0 16px 40px rgba(37,99,235,0.1)' } }}>
+              <Box component="article" className="glass-card animate-fade-in-up" sx={{ display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden', height: '100%', animationDelay: `${index * 150}ms`, border: '1px solid rgba(0,0,0,0.06)', transition: '0.3s', '&:hover': { transform: 'translateY(-6px)', boxShadow: '0 12px 30px rgba(37,99,235,0.1)' } }}>
                 {/* Image Placeholder */}
-                <Box sx={{ height: 220, background: post.img, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
-                  <Article sx={{ fontSize: 70, color: 'primary.main', opacity: 0.5 }} />
-                  <Chip label={post.cat} size="small" sx={{ position: 'absolute', top: 16, left: 16, bgcolor: 'white', color: 'primary.main', fontWeight: 700, boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }} />
+                <Box sx={{ height: 160, background: post.img, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+                  <Article sx={{ fontSize: 50, color: 'primary.main', opacity: 0.4 }} />
+                  <Chip label={post.cat} size="small" sx={{ position: 'absolute', top: 12, left: 12, bgcolor: 'white', color: 'primary.main', fontWeight: 700, fontSize: '0.75rem', height: 24, boxShadow: '0 2px 6px rgba(0,0,0,0.05)' }} />
                 </Box>
                 
-                <Box sx={{ p: 4, pt: 3, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                <Box sx={{ p: 3, pt: 2.5, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                   <Box sx={{ display: 'flex', gap: 2, mb: 1.5 }}>
                     <Typography variant="caption" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                       ⏱ {post.read} Baca
                     </Typography>
                   </Box>
-                  <Typography component="h3" variant="h6" sx={{ fontWeight: 700, mb: 2, fontSize: '1.25rem', lineHeight: 1.4, color: '#0f172a', '&:hover': { color: 'primary.main', cursor: 'pointer' } }}>
+                  <Typography component="h3" variant="h6" sx={{ fontWeight: 700, mb: 1.5, fontSize: '1.1rem', lineHeight: 1.4, color: '#0f172a', '&:hover': { color: 'primary.main', cursor: 'pointer' } }}>
                     {post.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 4, lineHeight: 1.6, flexGrow: 1 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3, lineHeight: 1.6, flexGrow: 1, fontSize: '0.9rem' }}>
                     {post.desc}
                   </Typography>
                   
