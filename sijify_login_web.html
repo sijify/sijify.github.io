@@ -74,7 +74,10 @@
           return;
         }
 
-        startAutoRedirect();
+        const autoRedirectParam = urlParams.get('auto') || urlParams.get('autologin');
+        if (autoRedirectParam === 'true') {
+          startAutoRedirect();
+        }
       }).catch((err) => {
         console.error("Redirect result error:", err);
         sessionStorage.removeItem('sijify_auth_attempted');
