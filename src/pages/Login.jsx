@@ -118,6 +118,7 @@ export default function Login() {
 
         const urlParams = new URLSearchParams(window.location.search);
         const callbackUrl = urlParams.get('callback');
+        const autoRedirectParam = urlParams.get('auto') || urlParams.get('autologin');
 
         auth.getRedirectResult().then(async (result) => {
           if (!isMounted) return;
@@ -132,7 +133,9 @@ export default function Login() {
             return;
           }
 
-          startAutoRedirect(auth);
+          if (autoRedirectParam === 'true') {
+            startAutoRedirect(auth);
+          }
         }).catch((err) => {
           if (!isMounted) return;
           console.error("Redirect result error:", err);
