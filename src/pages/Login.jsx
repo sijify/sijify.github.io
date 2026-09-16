@@ -15,6 +15,8 @@ export default function Login() {
   const [status, setStatus] = useState({ show: false, success: false, html: '' });
   const [showLoginContainer, setShowLoginContainer] = useState(true);
   const authRef = useRef(null);
+  const callbackUrlRef = useRef(null);
+  const handledRef = useRef(false);
 
   function showStatus(htmlContent, isSuccess) {
     setStatus({
@@ -24,18 +26,34 @@ export default function Login() {
     });
   }
 
-  function startAutoRedirect(auth) {
-    const hasTried = sessionStorage.getItem('sijify_auth_attempted');
-    if (!hasTried) {
-      sessionStorage.setItem('sijify_auth_attempted', 'true');
-      showStatus('<div class="spinner" style="margin-bottom:8px;"></div><br>Mengalihkan ke halaman login Google...', true);
-      const provider = new window.firebase.auth.GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
-      auth.signInWithRedirect(provider);
+  async function sendCallbackPayload(callbackUrl, payload) {
+    if (!callbackUrl) return;
+    try {
+      await fetch(callbackUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      console.log("Successfully posted auth callback to:", callbackUrl);
+    } catch (err) {
+      console.warn("Direct POST to callback failed, attempting fallback:", err);
+      try {
+        await fetch(callbackUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (fallbackErr) {
+        console.warn("Fallback POST also failed:", fallbackErr);
+      }
     }
   }
 
   async function handleAuthSuccess(user, callbackUrl) {
+    if (handledRef.current) return;
+    handledRef.current = true;
+
     let idToken = "";
     try {
       idToken = await user.getIdToken();
@@ -51,16 +69,9 @@ export default function Login() {
       idToken: idToken
     };
 
-    if (callbackUrl) {
-      try {
-        await fetch(callbackUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      } catch (err) {
-        console.warn("Could not post to local callback directly:", err);
-      }
+    const targetCallback = callbackUrl || callbackUrlRef.current || sessionStorage.getItem('sijify_callback_url');
+    if (targetCallback) {
+      await sendCallbackPayload(targetCallback, payload);
     }
 
     showStatus(`
@@ -73,19 +84,45 @@ export default function Login() {
     setShowLoginContainer(false);
   }
 
-  function doGoogleLogin() {
+  async function doGoogleLogin() {
     sessionStorage.removeItem('sijify_auth_attempted');
     const auth = authRef.current || (window.firebase && window.firebase.auth());
-    if (auth) {
-      const provider = new window.firebase.auth.GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
-      showStatus('<div class="spinner" style="margin-bottom:8px;"></div><br>Mengalihkan ke halaman login Google...', true);
-      auth.signInWithRedirect(provider);
+    if (!auth) return;
+
+    const provider = new window.firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    showStatus('<div class="spinner" style="margin-bottom:8px;"></div><br>Mengalihkan ke otentikasi Google...', true);
+
+    const targetCallback = callbackUrlRef.current || sessionStorage.getItem('sijify_callback_url');
+
+    try {
+      const result = await auth.signInWithPopup(provider);
+      if (result && result.user) {
+        await handleAuthSuccess(result.user, targetCallback);
+      }
+    } catch (popupErr) {
+      console.warn("Popup login closed or blocked, using redirect fallback:", popupErr);
+      if (popupErr.code !== 'auth/popup-closed-by-user') {
+        sessionStorage.setItem('sijify_auth_attempted', 'true');
+        auth.signInWithRedirect(provider);
+      } else {
+        setStatus({ show: false, success: false, html: '' });
+      }
     }
   }
 
   useEffect(() => {
     let isMounted = true;
+
+    // Capture and persist callback parameter from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramCallback = urlParams.get('callback');
+    if (paramCallback) {
+      sessionStorage.setItem('sijify_callback_url', paramCallback);
+      callbackUrlRef.current = paramCallback;
+    } else {
+      callbackUrlRef.current = sessionStorage.getItem('sijify_callback_url');
+    }
 
     const loadScript = (src) => {
       return new Promise((resolve, reject) => {
@@ -116,25 +153,13 @@ export default function Login() {
         const auth = window.firebase.auth();
         authRef.current = auth;
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const callbackUrl = urlParams.get('callback');
-        const autoRedirectParam = urlParams.get('auto') || urlParams.get('autologin');
-
+        // 1. Check getRedirectResult
         auth.getRedirectResult().then(async (result) => {
           if (!isMounted) return;
           if (result && result.user) {
             sessionStorage.removeItem('sijify_auth_attempted');
-            await handleAuthSuccess(result.user, callbackUrl);
+            await handleAuthSuccess(result.user, callbackUrlRef.current);
             return;
-          }
-          if (auth.currentUser) {
-            sessionStorage.removeItem('sijify_auth_attempted');
-            await handleAuthSuccess(auth.currentUser, callbackUrl);
-            return;
-          }
-
-          if (autoRedirectParam === 'true') {
-            startAutoRedirect(auth);
           }
         }).catch((err) => {
           if (!isMounted) return;
@@ -142,6 +167,16 @@ export default function Login() {
           sessionStorage.removeItem('sijify_auth_attempted');
           showStatus("⚠️ Gagal login: " + err.message, false);
         });
+
+        // 2. Listen to onAuthStateChanged for persistent or post-redirect user state
+        auth.onAuthStateChanged(async (user) => {
+          if (!isMounted) return;
+          if (user) {
+            sessionStorage.removeItem('sijify_auth_attempted');
+            await handleAuthSuccess(user, callbackUrlRef.current);
+          }
+        });
+
       } catch (err) {
         if (isMounted) {
           console.error("Initialization error:", err);
