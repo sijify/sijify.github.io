@@ -79,9 +79,24 @@ export default function Login() {
       <div style="font-weight: 700; font-size: 16px; color: #ffffff; margin-bottom: 2px;">Halo, ${payload.displayName}!</div>
       <div style="color: #9ca3af; margin-bottom: 12px; font-size: 13px;">${payload.email}</div>
       <div style="color: #34d399; font-weight: 600; font-size: 15px;">🎉 Login Berhasil!</div>
-      <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">Akun telah terhubung dengan SijiFy Management Account.<br>Anda dapat menutup tab ini dan kembali ke aplikasi.</div>
+      <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">Akun telah terhubung dengan SijiFy Management Account.<br>Halaman ini akan ditutup secara otomatis...</div>
     `, true);
     setShowLoginContainer(false);
+
+    // Auto-close tab/window after successful login
+    setTimeout(() => {
+      try {
+        window.close();
+      } catch (e) {
+        console.warn("window.close() standard call failed:", e);
+      }
+      try {
+        window.open('', '_self', '');
+        window.close();
+      } catch (e) {
+        console.warn("window.close() fallback call failed:", e);
+      }
+    }, 1500);
   }
 
   async function doGoogleLogin() {
@@ -114,7 +129,6 @@ export default function Login() {
   useEffect(() => {
     let isMounted = true;
 
-    // Capture and persist callback parameter from URL
     const urlParams = new URLSearchParams(window.location.search);
     const paramCallback = urlParams.get('callback');
     if (paramCallback) {
@@ -153,7 +167,6 @@ export default function Login() {
         const auth = window.firebase.auth();
         authRef.current = auth;
 
-        // 1. Check getRedirectResult
         auth.getRedirectResult().then(async (result) => {
           if (!isMounted) return;
           if (result && result.user) {
@@ -168,7 +181,6 @@ export default function Login() {
           showStatus("⚠️ Gagal login: " + err.message, false);
         });
 
-        // 2. Listen to onAuthStateChanged for persistent or post-redirect user state
         auth.onAuthStateChanged(async (user) => {
           if (!isMounted) return;
           if (user) {
